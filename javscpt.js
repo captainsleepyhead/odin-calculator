@@ -104,82 +104,42 @@ function handleNumberCases(str){
     }
 }
 
+function handleOperationCase(str){
+    if(operatorGlobal !== null){
+        previousOperator = operatorGlobal;
+    }
+    operatorGlobal = str;
+    if(!Number.isNaN(num1) && !Number.isNaN(num2)){
+        let result = operate(previousOperator, num1, num2);
+        if((typeof displayText) == 'number'){
+            num1 = displayText;
+        }
+        operatorGlobal = str;
+        return result;
+    }else if(Number.isNaN(num1) && Number.isNaN(num2)){
+        num1 = previousAnswer;
+        return operatorGlobal;
+    }else{
+        return operatorGlobal;
+    }
+}
+
 function handleCalculatorEvent(eventData){
     let lastDisplay = document.querySelector(".display");
     lastDisplay = lastDisplay.textContent;
     let displayText = 'error boss!';
     switch(eventData){
         case '+':
-            if(operatorGlobal !== null){
-                previousOperator = operatorGlobal;
-            }
-            operatorGlobal = '+';
-            if(!Number.isNaN(num1) && !Number.isNaN(num2)){
-                displayText = operate(previousOperator, num1, num2);
-                if((typeof displayText) == 'number'){
-                    num1 = displayText;
-                }
-                operatorGlobal = '+';
-            }else if(Number.isNaN(num1) && Number.isNaN(num2)){
-                num1 = previousAnswer;
-                displayText = operatorGlobal;
-            }else{
-                displayText = operatorGlobal;
-            }
+            displayText = handleOperationCase('+');
             break;
         case '-':
-            if(operatorGlobal !== null){
-                previousOperator = operatorGlobal;
-            }
-            operatorGlobal = '-';
-            if(!Number.isNaN(num1) && !Number.isNaN(num2)){
-                displayText = operate(previousOperator, num1, num2);
-                if((typeof displayText) == 'number'){
-                    num1 = displayText;
-                }
-                operatorGlobal = '-';
-            }else if(Number.isNaN(num1) && Number.isNaN(num2)){
-                num1 = previousAnswer;
-                displayText = operatorGlobal;
-            }else{
-                displayText = operatorGlobal;
-            }
+            displayText = handleOperationCase('-');
             break;
         case '*':
-            if(operatorGlobal !== null){
-                previousOperator = operatorGlobal;
-            }
-            operatorGlobal = '*';
-            if(!Number.isNaN(num1) && !Number.isNaN(num2)){
-                displayText = operate(previousOperator, num1, num2);
-                if((typeof displayText) == 'number'){
-                    num1 = displayText;
-                }
-                operatorGlobal = '*';
-            }else if(Number.isNaN(num1) && Number.isNaN(num2)){
-                num1 = previousAnswer;
-                displayText = operatorGlobal;
-            }else{
-                displayText = operatorGlobal;
-            }
+            displayText = handleOperationCase('*');
             break;
         case '/':
-            if(operatorGlobal !== null){
-                previousOperator = operatorGlobal;
-            }
-            operatorGlobal = '/';
-            if(!Number.isNaN(num1) && !Number.isNaN(num2)){
-                displayText = operate(previousOperator, num1, num2);
-                if((typeof displayText) == 'number'){
-                    num1 = displayText;
-                }
-                operatorGlobal = '/';
-            }else if(Number.isNaN(num1) && Number.isNaN(num2)){
-                num1 = previousAnswer;
-                displayText = operatorGlobal;
-            }else{
-                displayText = operatorGlobal;
-            }
+            displayText = handleOperationCase('/');
             break;
         case '0':
             displayText = handleNumberCases('0');
