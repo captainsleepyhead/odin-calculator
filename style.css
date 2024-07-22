@@ -72,10 +72,11 @@ a {
     font-weight: bold;
 }
 
-.left-links{
-    margin-left: 15px;
+.right-links{
+    display: flex;
+    gap: 20px;
 }
 
-.right-links{
-    margin-right: 15px;
+a {
+    padding: 12px
 }
