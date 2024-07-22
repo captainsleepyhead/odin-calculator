@@ -152,7 +152,9 @@ function handleCalculatorEvent(eventData){
             operatorGlobal = '*';
             if(!Number.isNaN(num1) && !Number.isNaN(num2)){
                 displayText = operate(previousOperator, num1, num2);
-                num1 = displayText;
+                if((typeof displayText) == 'number'){
+                    num1 = displayText;
+                }
                 operatorGlobal = '*';
             }else if(Number.isNaN(num1) && Number.isNaN(num2)){
                 num1 = previousAnswer;
@@ -223,6 +225,7 @@ function handleCalculatorEvent(eventData){
             num1 = NaN;
             num2 = NaN;
             operatorGlobal = null;
+            previousAnswer = NaN;
             displayText = '';
             break;
         case '.':
