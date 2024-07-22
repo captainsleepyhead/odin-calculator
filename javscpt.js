@@ -103,6 +103,7 @@ function handleNumberCases(str){
         return num2 += str;
     }
 }
+
 function handleCalculatorEvent(eventData){
     let lastDisplay = document.querySelector(".display");
     lastDisplay = lastDisplay.textContent;
