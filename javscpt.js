@@ -15,7 +15,14 @@ function divide(a, b){
         return "Can't Divide By 0!"
     return +a / +b;
 }
-
+/**
+ * Mathematical expression - takes 2 operand and perform the appropriate operation. Clear operand and operation variables for next set of inputs
+ * parse result to limit the number of charactors to display, so that the content of the container doesn't expand the container
+ * @param {*} operator arithmetic operation
+ * @param {*} a left operand of the expression
+ * @param {*} b right operand of the expression
+ * @returns 
+ */
 function operate(operator, a, b){
     let result;
     switch(operator){
@@ -50,11 +57,16 @@ function operate(operator, a, b){
     return result;
 }
 
+/**
+ * Function takes a str and display it to the div .display container - Responsive CSS
+ * @param {*} str display text from the calulator event to be output to the DOM
+ */
 function display(str){
     let div = document.querySelector('.display');
     div.textContent = str;
 }
 
+// INITIALIZE GLOBAL VARIABLES
 let operatorGlobal = null;
 let num1 = NaN;
 let num2 = NaN;
@@ -62,26 +74,25 @@ let previousAnswer = NaN;
 let previousOperator = null;
 
 let calculator = document.querySelector(".calculator");
+/**
+ * Listens for mouse clicks - pass the event to the calculator
+ */
 calculator.addEventListener('click', e => {
     handleCalculatorEvent(e.target.id)
 })
 
-
-function camouflagePlaceholderText(){
-    let btn = document.querySelector(".placeholder");
-    let bgColor = window.getComputedStyle(btn).backgroundColor;
-    let placeholder = document.querySelectorAll(".placeholder");
-    placeholder.forEach(element => {
-        element.style.color = bgColor;
-    });
-}
-
-camouflagePlaceholderText();
-
+/**
+ * Listens for keydown event - pass the event to the calculator
+ */
 document.addEventListener('keydown', e => {
     handleCalculatorEvent(e.key);
 })
 
+/**
+ * Takes a number in string value from event and place it appropriately in either the right or left operand of an expression
+ * @param {*} str number in string form
+ * @returns 
+ */
 function handleNumberCases(str){
     if(Number.isNaN(num1)){
         return num1 = str;
@@ -104,6 +115,11 @@ function handleNumberCases(str){
     }
 }
 
+/**
+ * Takes an arithmetic operation in string value from event. Prep operations so that it works well with '=' operations
+ * @param {*} str arithmetic in string form
+ * @returns 
+ */
 function handleOperationCase(str){
     if(operatorGlobal !== null){
         previousOperator = operatorGlobal;
@@ -124,6 +140,11 @@ function handleOperationCase(str){
     }
 }
 
+/**
+ * Takes the extracted needed data from event, which can be numbers, operations, enter, backspace and find the right case to handle input and 
+ * takes the result to be pass to the display function
+ * @param {*} eventData can be the id button clicked from the mouse click event, or can be the key id from the keydown event
+ */
 function handleCalculatorEvent(eventData){
     let lastDisplay = document.querySelector(".display");
     lastDisplay = lastDisplay.textContent;
@@ -225,3 +246,18 @@ function handleCalculatorEvent(eventData){
     }
     display(displayText);
 }
+
+/**
+ * Function used for ensuring text in <button> camouflage with background color
+ * No logic for the calculator - purely aesthetic
+ */
+function camouflagePlaceholderText(){
+    let btn = document.querySelector(".placeholder");
+    let bgColor = window.getComputedStyle(btn).backgroundColor;
+    let placeholder = document.querySelectorAll(".placeholder");
+    placeholder.forEach(element => {
+        element.style.color = bgColor;
+    });
+}
+
+camouflagePlaceholderText();
