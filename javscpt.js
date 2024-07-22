@@ -12,7 +12,7 @@ function multiple(a, b){
 
 function divide(a, b){
     if(+b === 0)
-        return "Nice try! You can't divide by zero xD";
+        return "Can't Divide By 0!"
     return +a / +b;
 }
 
@@ -28,6 +28,7 @@ function operate(operator, a, b){
         case '*':
             result = multiple(a, b);
             break;
+        case '/':
             result = divide(a, b);
             break;
     }
@@ -35,6 +36,10 @@ function operate(operator, a, b){
     num2 = NaN;
     operatorGlobal = null;
     previousOperator = null;
+    if(result === "Can't Divide By 0!"){
+        previousAnswer = NaN;
+        return result;
+    }
     let str = result.toString();
     if(str.includes('.')){
         result = Math.round((result + Number.EPSILON) * 10000000000000) / 10000000000000;
@@ -77,6 +82,27 @@ document.addEventListener('keydown', e => {
     handleCalculatorEvent(e.key);
 })
 
+function handleNumberCases(str){
+    if(Number.isNaN(num1)){
+        return num1 = str;
+    }else if(operatorGlobal === null){
+        if(num1.includes('.'))
+            if(num1.length == 16)
+                return 'error boss!';
+        else if(num1.length == 15)
+            return 'error boss!';
+        return num1 += str;
+    }else if(Number.isNaN(num2)){
+        return num2 = str;
+    }else{
+        if(num2.includes('.'))
+            if(num2.length == 16)
+                return 'error boss!';
+        else if(num2.length == 15)
+            return 'error boss!';
+        return num2 += str;
+    }
+}
 function handleCalculatorEvent(eventData){
     let lastDisplay = document.querySelector(".display");
     lastDisplay = lastDisplay.textContent;
@@ -125,9 +151,6 @@ function handleCalculatorEvent(eventData){
             operatorGlobal = '*';
             if(!Number.isNaN(num1) && !Number.isNaN(num2)){
                 displayText = operate(previousOperator, num1, num2);
-                // if((typeof displayText) == 'number'){
-                //     num1 = displayText;
-                // }
                 num1 = displayText;
                 operatorGlobal = '*';
             }else if(Number.isNaN(num1) && Number.isNaN(num2)){
@@ -156,214 +179,34 @@ function handleCalculatorEvent(eventData){
             }
             break;
         case '0':
-            if(Number.isNaN(num1)){
-                displayText = num1 = '0';
-            }else if(operatorGlobal === null){
-                if(num1.includes('.'))
-                    if(num1.length == 16)
-                        break;
-                else if(num1.length == 15)
-                    break;
-                displayText = num1 += '0';
-            }else if(Number.isNaN(num2)){
-                displayText = num2 = '0';
-            }else{
-                if(num2.includes('.'))
-                    if(num2.length == 16)
-                        break;
-                else if(num2.length == 15)
-                    break;
-                displayText = num2 += '0';
-            }
+            displayText = handleNumberCases('0');
             break;
         case '1':
-            if(Number.isNaN(num1)){
-                displayText = num1 = '1';
-            }else if(operatorGlobal === null){
-                if(num1.includes('.'))
-                    if(num1.length == 16)
-                        break;
-                else if(num1.length == 15)
-                    break;
-                displayText = num1 += '1';
-            }else if(Number.isNaN(num2)){
-                displayText = num2 = '1';
-            }else{
-                if(num2.includes('.'))
-                    if(num2.length == 16)
-                        break;
-                else if(num2.length == 15)
-                    break;
-                displayText = num2 += '1';
-            }
+            displayText = handleNumberCases('1');
             break;
         case '2':
-            if(Number.isNaN(num1)){
-                displayText = num1 = '2';
-            }else if(operatorGlobal === null){
-                if(num1.includes('.'))
-                    if(num1.length == 16)
-                        break;
-                else if(num1.length == 15)
-                    break;
-                displayText = num1 += '2';
-            }else if(Number.isNaN(num2)){
-                displayText = num2 = '2';
-            }else{
-                if(num2.includes('.'))
-                    if(num2.length == 16)
-                        break;
-                else if(num2.length == 15)
-                    break;
-                displayText = num2 += '2';
-            }
+            displayText = handleNumberCases('2');
             break;
         case '3':
-            if(Number.isNaN(num1)){
-                displayText = num1 = '3';
-            }else if(operatorGlobal === null){
-                if(num1.includes('.'))
-                    if(num1.length == 16)
-                        break;
-                else if(num1.length == 15)
-                    break;
-                displayText = num1 += '3';
-            }else if(Number.isNaN(num2)){
-                displayText = num2 = '3';
-            }else{
-                if(num2.includes('.'))
-                    if(num2.length == 16)
-                        break;
-                else if(num2.length == 15)
-                    break;
-                displayText = num2 += '3';
-            }
+            displayText = handleNumberCases('3');
             break;
         case '4':
-            if(Number.isNaN(num1)){
-                displayText = num1 = '4';
-            }else if(operatorGlobal === null){
-                if(num1.includes('.'))
-                    if(num1.length == 16)
-                        break;
-                else if(num1.length == 15)
-                    break;
-                displayText = num1 += '4';
-            }else if(Number.isNaN(num2)){
-                displayText = num2 = '4';
-            }else{
-                if(num2.includes('.'))
-                    if(num2.length == 16)
-                        break;
-                else if(num2.length == 15)
-                    break;
-                displayText = num2 += '4';
-            }
+            displayText = handleNumberCases('4');
             break;
         case '5':
-            if(Number.isNaN(num1)){
-                displayText = num1 = '5';
-            }else if(operatorGlobal === null){
-                if(num1.includes('.'))
-                    if(num1.length == 16)
-                        break;
-                else if(num1.length == 15)
-                    break;
-                displayText = num1 += '5';
-            }else if(Number.isNaN(num2)){
-                displayText = num2 = '5';
-            }else{
-                if(num2.includes('.'))
-                    if(num2.length == 16)
-                        break;
-                else if(num2.length == 15)
-                    break;
-                displayText = num2 += '5';
-            }
+            displayText = handleNumberCases('5');
             break;
         case '6':
-            if(Number.isNaN(num1)){
-                displayText = num1 = '6';
-            }else if(operatorGlobal === null){
-                if(num1.includes('.'))
-                    if(num1.length == 16)
-                        break;
-                else if(num1.length == 15)
-                    break;
-                displayText = num1 += '6';
-            }else if(Number.isNaN(num2)){
-                displayText = num2 = '6';
-            }else{
-                if(num2.includes('.'))
-                    if(num2.length == 16)
-                        break;
-                else if(num2.length == 15)
-                    break;
-                displayText = num2 += '6';
-            }
+            displayText = handleNumberCases('6');
             break;
         case '7':
-            if(Number.isNaN(num1)){
-                displayText = num1 = '7';
-            }else if(operatorGlobal === null){
-                if(num1.includes('.'))
-                    if(num1.length == 16)
-                        break;
-                else if(num1.length == 15)
-                    break;
-                displayText = num1 += '7';
-            }else if(Number.isNaN(num2)){
-                displayText = num2 = '7';
-            }else{
-                if(num2.includes('.'))
-                    if(num2.length == 16)
-                        break;
-                else if(num2.length == 15)
-                    break;
-                displayText = num2 += '7';
-            }
+            displayText = handleNumberCases('7');
             break;
         case '8':
-            if(Number.isNaN(num1)){
-                displayText = num1 = '8';
-            }else if(operatorGlobal === null){
-                if(num1.includes('.'))
-                    if(num1.length == 16)
-                        break;
-                else if(num1.length == 15)
-                    break;
-                displayText = num1 += '8';
-            }else if(Number.isNaN(num2)){
-                displayText = num2 = '8';
-            }else{
-                if(num2.includes('.'))
-                    if(num2.length == 16)
-                        break;
-                else if(num2.length == 15)
-                    break;
-                displayText = num2 += '8';
-            }
+            displayText = handleNumberCases('8');
             break;
         case '9':
-            if(Number.isNaN(num1)){
-                displayText = num1 = '9';
-            }else if(operatorGlobal === null){
-                if(num1.includes('.'))
-                    if(num1.length == 16)
-                        break;
-                else if(num1.length == 15)
-                    break;
-                displayText = num1 += '9';
-            }else if(Number.isNaN(num2)){
-                displayText = num2 = '9';
-            }else{
-                if(num2.includes('.'))
-                    if(num2.length == 16)
-                        break;
-                else if(num2.length == 15)
-                    break;
-                displayText = num2 += '9';
-            }
+            displayText = handleNumberCases('9');
             break;
         case '=':
         case 'Enter':
