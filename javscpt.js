@@ -48,12 +48,14 @@ function operate(operator, a, b){
         return result;
     }
     let str = result.toString();
+    previousAnswer = result;
+    if(result > 999999999999999){
+        previousAnswer = NaN;
+        return "OverFlow!";
+    }
     if(str.includes('.')){
         result = Math.round((result + Number.EPSILON) * 10000000000000) / 10000000000000;
-    }else{
-        result = Math.round((result + Number.EPSILON) * 100000000000000) / 100000000000000;
     }
-    previousAnswer = result;
     return result;
 }
 
@@ -97,7 +99,7 @@ function handleNumberCases(str){
     if(Number.isNaN(num1)){
         return num1 = str;
     }else if(operatorGlobal === null){
-        if(num1.includes('.'))
+        if(!Number.isInteger(num1))
             if(num1.length == 16)
                 return 'error boss!';
         else if(num1.length == 15)
@@ -106,7 +108,7 @@ function handleNumberCases(str){
     }else if(Number.isNaN(num2)){
         return num2 = str;
     }else{
-        if(num2.includes('.'))
+        if(!Number.isInteger(num2))
             if(num2.length == 16)
                 return 'error boss!';
         else if(num2.length == 15)
@@ -127,8 +129,10 @@ function handleOperationCase(str){
     operatorGlobal = str;
     if(!Number.isNaN(num1) && !Number.isNaN(num2)){
         let result = operate(previousOperator, num1, num2);
-        if((typeof displayText) == 'number'){
-            num1 = displayText;
+        if((typeof result) == 'number'){
+            num1 = result;
+        }else{
+            num1 = NaN;
         }
         operatorGlobal = str;
         return result;
@@ -194,13 +198,18 @@ function handleCalculatorEvent(eventData){
             break;
         case '=':
         case 'Enter':
-            if(Number.isNaN(num1) || operatorGlobal === null || Number.isNaN(num2)){
+            if(!Number.isNaN(num2)){
+                displayText = operate(operatorGlobal, num1, num2);
+            }else if(operatorGlobal !== null){
+                num2 = num1;
+                displayText = operate(operatorGlobal, num1, num2);
+            }else
+            if(Number.isNaN(num1)){
                 num1 = previousAnswer;  
                 operatorGlobal = null;
                 displayText = num1;
                 break;
             }
-            displayText = operate(operatorGlobal, num1, num2);
             break;
         case 'clr':
             num1 = NaN;
